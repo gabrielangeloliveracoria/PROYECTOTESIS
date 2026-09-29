@@ -1,19 +1,26 @@
-# :earth_americas: GDP dashboard template
+DSS – Control de Dosificación de Resina | MP2
 
-A simple Streamlit app showing the GDP of different countries in the world.
+Prototipo en Streamlit para recomendar la dosificación necesaria para alcanzar 10.07 kg/t, estimar sobredosificación e impacto económico, registrar la decisión del operador y exportar el historial a Excel.
 
-[![Open in Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://gdp-dashboard-template.streamlit.app/)
+Ejecución local
 
-### How to run it on your own machine
+pip install -r requirements.txt
+streamlit run app.py
 
-1. Install the requirements
+Ejecución en Google Colab
 
-   ```
-   $ pip install -r requirements.txt
-   ```
+Sube app.py y requirements.txt, instala las dependencias y ejecuta Streamlit mediante el túnel que utilices normalmente.
 
-2. Run the app
+Parámetros actuales
 
-   ```
-   $ streamlit run streamlit_app.py
-   ```
+Objetivo: 10.07 kg/t
+
+Costo: USD 1.2723/kg
+
+Densidad provisional: 1.064 kg/L
+
+IBC: 1,000 kg
+
+Velocidad habitual: 1,300–1,350 m/min
+
+La unidad de flujo y la densidad deben validarse antes de usar el prototipo para decisiones reales de planta.
