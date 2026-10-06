@@ -1338,3 +1338,69 @@ st.caption(
     "La unidad de flujo, densidad y límites deben validarse "
     "en planta antes de uso operativo."
 )
+
+# ============================================================
+# ADMINISTRACIÓN - RESETEAR HISTORIAL
+# ============================================================
+
+st.divider()
+
+with st.expander("🔐 ADMINISTRACIÓN DEL DSS"):
+
+    st.warning(
+        "El reseteo eliminará permanentemente todos los registros "
+        "del historial operativo. Exporte el historial a Excel antes "
+        "de continuar si desea conservar los resultados."
+    )
+
+    reset_password = st.text_input(
+        "Contraseña de administrador",
+        type="password",
+        key="reset_password"
+    )
+
+    confirm_reset = st.checkbox(
+        "Confirmo que deseo eliminar todo el historial",
+        key="confirm_reset"
+    )
+
+    if st.button(
+        "🗑️ RESETEAR HISTORIAL",
+        type="secondary",
+        use_container_width=True
+    ):
+
+        if reset_password != "72379280":
+
+            st.error("❌ Contraseña incorrecta.")
+
+        elif not confirm_reset:
+
+            st.warning(
+                "⚠️ Marque la casilla de confirmación antes de resetear."
+            )
+
+        else:
+
+            with connection() as con:
+
+                # Elimina todos los registros
+                con.execute("DELETE FROM historial")
+
+                # Reinicia el contador ID para que vuelva a comenzar en 1
+                con.execute(
+                    "DELETE FROM sqlite_sequence "
+                    "WHERE name='historial'"
+                )
+
+                con.commit()
+
+            # Limpia estados temporales de la interfaz
+            st.session_state["show_decision"] = False
+
+            st.success(
+                "✅ Historial eliminado correctamente. "
+                "El DSS comenzará una nueva prueba desde cero."
+            )
+
+            st.rerun()
